@@ -30,5 +30,16 @@ async def get_all_address(datbase: Session = Depends(db.get_db)):
     response= await services.get_address_listing(database=datbase)
     return response
 
+@app.get('/addressbyid/{address_id}',status_code=status.HTTP_200_OK,response_model=schemas.AddressBase)
+async def get_address_by_id(address_id:int,database: Session = Depends(db.get_db)):
+        return await services.get_address_by_id(address_id=address_id,database=database)
+
+@app.delete("/deleteaddressid/{address_id}",status_code=status.HTTP_200_OK)
+async def delete_address_by_id(address_id: int, database: Session=Depends(db.get_db)):
+        return await services.delete_address_by_id(address_id=address_id,database=database)
 
 
+@app.put("/updateaddressbyid/{address_id}",status_code=status.HTTP_200_OK,response_model=schemas.AddressBase)
+async def update_address_by_id(request:schemas.AddressBase, address_id: int,databse: Session=Depends(db.get_db)):
+        print("reuest-->",request)
+        return await services.update_address_by_id(request=request,address_id=address_id,database=databse)

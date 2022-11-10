@@ -21,7 +21,8 @@ class MultipleAddress(BaseModel):
     data: List[AddressBase]
 
 class AddressList(BaseModel):
-    address: Optional[str]
-
+    id: Optional[int]
+    created_date: Optional[str]
+    address: str
     class Config:
         orm_mode = True

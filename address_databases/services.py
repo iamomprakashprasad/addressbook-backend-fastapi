@@ -36,15 +36,16 @@ async def delete_address_by_id(address_id,database):
     database.commit()
 
 
-async def update_address_by_id(request, address_id, user_id, database):
+async def update_address_by_id(request, address_id, database):
     address = database.query(models.Address).filter_by(
         id=address_id).first()
+    print("Adress -->",address)
     if not address:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Address Not Found !"
         )
-    address.shipping_address = request.shipping_address if request.shipping_address else address.shipping_address
+    address.address = request.address if request.address else address.address
     database.commit()
     database.refresh(address)
     return address

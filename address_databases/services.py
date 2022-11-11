@@ -54,3 +54,13 @@ async def update_address_by_id(request, address_id, database):
     print("new Adress -->", address)
     database.refresh(address)
     return address
+
+async def get_address_by_coordinates(address_coordinate,database) -> List[models.Address]:
+    address = database.query(models.Address).filter_by(
+        address_coordinate=address_coordinate).all()
+    if not address:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Address Not Found !"
+        )
+    return address

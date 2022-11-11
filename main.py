@@ -42,3 +42,7 @@ async def delete_address_by_id(address_id: int, database: Session = Depends(db.g
 async def update_address_by_id(request: schemas.AddressBase, address_id: int, databse: Session = Depends(db.get_db)):
     return await services.update_address_by_id(request=request, address_id=address_id, database=databse)
 
+# get addresses by coordinates
+@app.get(constants.get_address_by_coordinate, status_code=status.HTTP_200_OK, response_model=List[schemas.AddressList])
+async def get_address_by_coordinates(address_coordinate: str, database: Session = Depends(db.get_db)):
+    return await services.get_address_by_coordinates(address_coordinate=address_coordinate, database=database)

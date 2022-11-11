@@ -4,15 +4,18 @@ from . import models
 from datetime import datetime
 
 
+'''performing all database queries'''
+
+
 async def create_new_address(request, database) -> models.Address:
     new_address = models.Address( address=request.address,
-                                created_date=str(datetime.now()))
-    print("New ___________",new_address)
+                                modified_at=datetime.now(),coordinate=request.cordinate)              
+    print(f"New Address -->{new_address}")
     database.add(new_address)
     database.commit()
     database.refresh(new_address)
     return new_address
-
+    #i have checked to validate cordinates by google apis howere due to lack of credit card i don't have access to google apis free trial
 
 async def get_address_listing(database) -> List[models.Address]:
     addresses = database.query(models.Address).all()

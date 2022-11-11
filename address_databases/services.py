@@ -9,13 +9,11 @@ from datetime import datetime
 
 async def create_new_address(request, database) -> models.Address:
     new_address = models.Address(address=request.address,
-                                 modified_at=datetime.now(), coordinate=request.cordinate)
-    print(f"New Address -->{new_address}")
+                                 modified_at=datetime.now(), address_coordinate=request.address_coordinate)
     database.add(new_address)
     database.commit()
     database.refresh(new_address)
     return new_address
-    # i have checked to validate cordinates by google apis howere due to lack of credit card i don't have access to google apis free trial
 
 
 async def get_address_listing(database) -> List[models.Address]:
@@ -43,13 +41,16 @@ async def delete_address_by_id(address_id, database):
 async def update_address_by_id(request, address_id, database):
     address = database.query(models.Address).filter_by(
         id=address_id).first()
-    print("Updated Adress -->", address)
+    print("Old Adress -->", address)
     if not address:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Address Not Found !"
         )
     address.address = request.address if request.address else address.address
+    address.address_coordinate = request.address_coordinate if request.address_coordinate else address.address_coordinate
+    address.modified_at = datetime.utcnow()
     database.commit()
+    print("new Adress -->", address)
     database.refresh(address)
     return address

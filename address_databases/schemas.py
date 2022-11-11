@@ -1,11 +1,13 @@
 from typing import Optional, List
-from pydantic import BaseModel, constr
+from pydantic import BaseModel
 
 
 class AddressBase(BaseModel):
     id: Optional[int]
-    created_date: Optional[str]
+    modified_at: Optional[str]
+    address_coordinate:str
     address: str
+
 
     class Config:
         orm_mode = True
@@ -13,6 +15,8 @@ class AddressBase(BaseModel):
 
 class AddressUpdate(BaseModel):
     address: Optional[str]
+    address_coordinate:Optional[str]
+    
 
     class Config:
         orm_mode = True
@@ -25,7 +29,8 @@ class MultipleAddress(BaseModel):
 
 class AddressList(BaseModel):
     id: Optional[int]
-    created_date: Optional[str]
+    modified_at: Optional[str]
+    address_coordinate:str
     address: str
 
     class Config:

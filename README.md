@@ -1,7 +1,3 @@
-This projet is made under hiring process of EastVantage.com by Om Prakash.
-The task is to develop an address book by using FastApi
-
-
 # Steps to setup Project
 git clone https://github.com/iamomprakashprasad/fastapi.git
 cd fastapi
